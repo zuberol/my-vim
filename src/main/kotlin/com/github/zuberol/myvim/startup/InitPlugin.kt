@@ -1,9 +1,9 @@
 package com.github.zuberol.myvim.startup
 
 import com.github.zuberol.myvim.NoWritePre
+import com.github.zuberol.myvim.OnEscape
 import com.intellij.ide.util.RunOnceUtil.runOnceForApp
 import com.intellij.openapi.diagnostic.logger
-import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.editor.actionSystem.EditorActionManager
 import com.intellij.openapi.editor.actionSystem.TypedAction
 import com.intellij.openapi.project.Project
@@ -23,6 +23,10 @@ class InitPlugin : ProjectActivity {
         TypedAction.getInstance()
             .setupRawHandler(NoWritePre())
         log.warn("end init")
+
+        val am = EditorActionManager.getInstance()
+
+        am.setActionHandler("EditorEscape", OnEscape())
 
     }
 }

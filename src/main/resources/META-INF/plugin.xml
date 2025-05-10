@@ -13,9 +13,7 @@
 <!--    </extensions>-->
 
     <extensions defaultExtensionNs="com.intellij">
-        <editorActionHandler action="EditorEscape" implementationClass="com.github.zuberol.myvim.OnEscape"
-                             id="ideavim-esc"
-                             />
+<!--        <editorActionHandler action="EditorEscape" implementationClass="com.github.zuberol.myvim.OnEscape" id="ideavim-esc"/>-->
 <!--        <editorTypedHandler></editorTypedHandler>-->
 <!--        EditorEscape-->
 <!--        use com.intellij.codeInsight.editorActions.TypedHandlerDelegate-->

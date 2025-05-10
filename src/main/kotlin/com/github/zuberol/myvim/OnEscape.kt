@@ -12,6 +12,7 @@ class OnEscape : EditorActionHandler() {
         val log = logger<OnEscape>()
 
         log.warn("current mode: ${Vim.mode}")
+        log.warn("dynamic handler")
 
         if(Vim.mode == Insert) {
             Vim.mode = Normal
