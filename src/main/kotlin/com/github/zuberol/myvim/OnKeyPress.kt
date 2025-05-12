@@ -29,7 +29,7 @@ val BLOCK =
 val BAR =
     CaretVisualAttributes(null, CaretVisualAttributes.Weight.NORMAL, CaretVisualAttributes.Shape.BAR, 0.25F)
 
-class NoWriteCodeInsides : TypedHandlerDelegate() {
+class OnKeyPress : TypedHandlerDelegate() {
     private val log: Logger = thisLogger()
     override fun beforeCharTyped(c: Char, project: Project, editor: Editor, file: PsiFile, fileType: FileType): Result {
         log.debug("char typed = \"$c\", mode =${Vim.mode}")
@@ -135,7 +135,6 @@ class NoWriteCodeInsides : TypedHandlerDelegate() {
                             val line = editor.document.getLineNumber(editor.caretModel.offset)
                             val col = editor.caretModel.currentCaret.offset - editor.document.getLineStartOffset(line)
                             val dest = editor.document.getLineStartOffset(line + 1)
-//                            log.warn("offset: $line, col: ${col}, dest: ${dest + col}")
                             runWriteCommandAction(project) {
                                 editor.document.deleteString(editor.caretModel.currentCaret.offset, dest + col)
                             }

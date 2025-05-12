@@ -3,30 +3,9 @@
     <id>com.github.zuberol.myvim</id>
     <name>my-vim</name>
     <vendor>zuberol</vendor>
-
     <depends>com.intellij.modules.platform</depends>
-
-    <resource-bundle>messages.MyBundle</resource-bundle>
-
-<!--    <extensions defaultExtensionNs="com.intellij.codeInsight">-->
-<!--        <extension id="com.intellij.codeInsight.editorActions.TypedHandlerDelegate" />-->
-<!--    </extensions>-->
-
     <extensions defaultExtensionNs="com.intellij">
-<!--        <editorActionHandler action="EditorEscape" implementationClass="com.github.zuberol.myvim.OnEscape" id="ideavim-esc"/>-->
-<!--        <editorTypedHandler></editorTypedHandler>-->
-<!--        EditorEscape-->
-<!--        use com.intellij.codeInsight.editorActions.TypedHandlerDelegate-->
-<!--        <rawEditorTypedHandler></rawEditorTypedHandler>-->
-<!--        <editorTypedHandler></editorTypedHandler>-->
-
-        <!--  <toolWindow factoryClass="com.github.zuberol.myvim.toolWindow.MyToolWindowFactory" id="MyToolWindow"/> -->
-<!--        <postStartupActivity implementation="com.github.zuberol.myvim.startup.MyProjectActivity" />-->
-        <postStartupActivity implementation="com.github.zuberol.myvim.startup.InitPlugin" />
-<!--        <editorActionHandler action="EditorEnter" implementationClass="com.github.zuberol.myvim.NoWriteEditorActionHandler" id="some-arbitrary-id" />-->
-        <!--
-                <editorActionHandler action="Editor" implementationClass="" implementation="com.github.zuberol.myvim.NoWritePre"
-
-        <typedHandler id="some-arbitrary-id-one" implementation="com.github.zuberol.myvim.NoWriteCodeInsides" /> -->
+        <postStartupActivity implementation="com.github.zuberol.myvim.InitPlugin" />
+        <typedHandler id="some-arbitrary-id" implementation="com.github.zuberol.myvim.OnKeyPress" />
     </extensions>
 </idea-plugin>
