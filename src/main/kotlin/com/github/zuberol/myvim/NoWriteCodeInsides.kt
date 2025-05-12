@@ -36,23 +36,23 @@ class NoWriteCodeInsides : TypedHandlerDelegate() {
         return when(Vim.mode) {
             Insert -> {
                 editor.redrawCaret(BAR)
-                return Result.CONTINUE
+                Result.CONTINUE
             }
             Normal -> {
                 editor.redrawCaret(BLOCK)
-                return when (c) {
+                when (c) {
                     'i' -> {
                         Vim.mode = Insert
-                        return Result.STOP
+                        Result.STOP
                     }
                     'd' -> {
                         Vim.mode = OpPending(c)
-                        return Result.STOP
+                        Result.STOP
                     }
                     'v' -> {
                         Vim.mode = Visual
                         editor.redrawCaret(BLOCK)
-                        return Result.STOP
+                        Result.STOP
                     }
                     'h' -> {
                         val pos = editor.caretModel.visualPosition
@@ -61,7 +61,7 @@ class NoWriteCodeInsides : TypedHandlerDelegate() {
                                 pos.line,
                                 pos.column - 1
                             ))
-                        return Result.STOP
+                        Result.STOP
                     }
                     'j' -> {
                         val pos = editor.caretModel.visualPosition
@@ -70,7 +70,7 @@ class NoWriteCodeInsides : TypedHandlerDelegate() {
                                 pos.line + 1,
                                 pos.column
                             ))
-                        return Result.STOP
+                        Result.STOP
                     }
                     'k' -> {
                         val pos = editor.caretModel.visualPosition
@@ -79,7 +79,7 @@ class NoWriteCodeInsides : TypedHandlerDelegate() {
                                 pos.line - 1,
                                 pos.column
                             ))
-                        return Result.STOP
+                        Result.STOP
                     }
                     'l' -> {
                         val pos = editor.caretModel.visualPosition
@@ -88,15 +88,18 @@ class NoWriteCodeInsides : TypedHandlerDelegate() {
                                 pos.line,
                                 pos.column + 1
                             ))
-                        return Result.STOP
+                        Result.STOP
                     }
                     else -> {
                         log.debug("no action")
-                        return Result.CONTINUE
+                        Result.CONTINUE
                     }
                 }
             }
-            Visual -> TODO()
+            Visual -> {
+                log.debug("not implemented")
+                Result.CONTINUE
+            }
             is OpPending -> {
                 editor.redrawCaret(BAR)
                 val prev = (Vim.mode as OpPending).prev
@@ -110,7 +113,7 @@ class NoWriteCodeInsides : TypedHandlerDelegate() {
                                 editor.document.deleteString(start, end)
                             }
                             Vim.mode = Normal
-                            return Result.STOP
+                            Result.STOP
                         }
                         'h' -> {
                             runWriteCommandAction(project) {
@@ -118,7 +121,7 @@ class NoWriteCodeInsides : TypedHandlerDelegate() {
                                 editor.document.deleteString(start - 1 , start)
                             }
                             Vim.mode = Normal
-                            return Result.STOP
+                            Result.STOP
                         }
                         'l' -> {
                             runWriteCommandAction(project) {
@@ -126,7 +129,7 @@ class NoWriteCodeInsides : TypedHandlerDelegate() {
                                 editor.document.deleteString(start, start + 1)
                             }
                             Vim.mode = Normal
-                            return Result.STOP
+                            Result.STOP
                         }
                         'j' -> {
                             val line = editor.document.getLineNumber(editor.caretModel.offset)
@@ -137,7 +140,7 @@ class NoWriteCodeInsides : TypedHandlerDelegate() {
                                 editor.document.deleteString(editor.caretModel.currentCaret.offset, dest + col)
                             }
                             Vim.mode = Normal
-                            return Result.STOP
+                            Result.STOP
                         }
                         'k' -> {
                             val line = editor.document.getLineNumber(editor.caretModel.offset)
@@ -147,7 +150,7 @@ class NoWriteCodeInsides : TypedHandlerDelegate() {
                                 editor.document.deleteString(dest + col, editor.caretModel.currentCaret.offset)
                             }
                             Vim.mode = Normal
-                            return Result.STOP
+                            Result.STOP
                         }
                         else -> {
                             log.warn("not implemented")
@@ -156,7 +159,7 @@ class NoWriteCodeInsides : TypedHandlerDelegate() {
                     log.warn("only delete end line")
                 }
                 log.warn("only delete is supported")
-                return Result.CONTINUE
+                Result.CONTINUE
             }
         }
     }
